@@ -1,0 +1,159 @@
+code,nom,SECU.GPI.POLI
+AFG,Afghanistan,3.0
+ZAF,Afrique du Sud,2.0
+ALB,Albanie,2.0
+DZA,Algérie,4.0
+DEU,Allemagne,2.0
+AGO,Angola,2.0
+SAU,Arabie Saoudite,3.0
+ARG,Argentine,1.0
+ARM,Arménie,2.0
+AUS,Australie,2.0
+AUT,Autriche,2.0
+AZE,Azerbaïdjan,1.0
+BHR,Bahreïn,5.0
+BGD,Bangladesh,1.0
+BLR,Belarus,2.0
+BEL,Belgique,2.0
+BEN,Bénin ,3.0
+BTN,Bhoutan,1.0
+BOL,Bolivie,2.0
+BIH,Bosnie-Herzégovine,3.0
+BWA,Botswana,3.0
+BRA,Brésil,3.0
+BGR,Bulgarie,3.0
+BFA,Burkina Faso,3.0
+BDI,Burundi,3.0
+KHM,Cambodge,1.0
+CMR,Cameroun,2.0
+CAN,Canada,2.0
+CAF,Centrafricaine (rep),1.0
+CHL,Chili,2.0
+CHN,Chine,2.0
+CYP,Chypre,3.0
+COL,Colombie,2.0
+COG,Congo,2.0
+COD,Congo (rep. dem.),1.0
+PRK,Corée du Nord,5.0
+KOR,Corée du Sud,2.0
+CRI,Costa Rica,2.0
+CIV,Côte d'Ivoire,2.0
+HRV,Croatie,3.0
+CUB,Cuba,4.0
+DNK,Danemark,1.0
+DJI,Djibouti,4.0
+DOM,Dominicaine (Rep),2.0
+EGY,Égypte,4.0
+ARE,Émirats arabes unis,2.0
+ECU,Équateur,3.0
+ERI,Érythrée,2.0
+ESP,Espagne,2.0
+EST,Estonie,3.0
+SWZ,Eswatini,2.0
+USA,États-Unis,2.0
+ETH,Éthiopie,2.0
+FIN,Finlande,2.0
+FRA,France,1.0
+GAB,Gabon,1.0
+GMB,Gambie,2.0
+GEO,Géorgie,3.0
+GHA,Ghana,2.0
+GRC,Grèce,2.0
+GTM,Guatemala,2.0
+GIN,Guinée,2.0
+GNQ,Guinée équatoriale,3.0
+GNB,Guinée-Bissau,2.0
+GUY,Guyana,1.0
+HTI,Haïti,5.0
+HND,Honduras,1.0
+HUN,Hongrie,2.0
+IND,Inde,2.0
+IDN,Indonésie,1.0
+IRQ,Irak,3.0
+IRN,Iran,2.0
+IRL,Irlande,3.0
+ISL,Islande,2.0
+ISR,Israël,2.0
+ITA,Italie,1.0
+JAM,Jamaïque,2.0
+JPN,Japon,1.0
+JOR,Jordanie,2.0
+KAZ,Kazakhstan,2.0
+KEN,Kenya,1.0
+KGZ,Kirghizstan,2.0
+KWT,Koweït,3.0
+LAO,Laos,2.0
+LSO,Lesotho,2.0
+LVA,Lettonie,2.0
+LBN,Liban,2.0
+LBR,Liberia,2.0
+LBY,Libye,2.0
+LTU,Lituanie,2.0
+MKD,Macédoine du Nord,3.0
+MDG,Madagascar,2.0
+MYS,Malaisie,3.0
+MWI,Malawi,1.0
+MLI,Mali,2.0
+MAR,Maroc,2.0
+MUS,Maurice,2.0
+MRT,Mauritanie,2.0
+MEX,Mexique,2.0
+MDA,Moldavie,2.0
+MNG,Mongolie,2.0
+MNE,Monténégro,2.0
+MOZ,Mozambique,2.0
+MMR,Myanmar,2.0
+NAM,Namibie,2.0
+NPL,Népal,2.0
+NIC,Nicaragua,2.0
+NER,Niger,2.0
+NGA,Nigeria,2.0
+NOR,Norvège,2.0
+NZL,Nouvelle-Zélande,2.0
+OMN,Oman,3.0
+UGA,Ouganda,2.0
+UZB,Ouzbékistan,2.0
+PAK,Pakistan,2.0
+PAN,Panama,2.0
+PNG,Papouasie-Nouvelle-G.,2.0
+PRY,Paraguay,1.0
+NLD,Pays-Bas,2.0
+PER,Pérou,3.0
+PHL,Philippines,1.0
+POL,Pologne,2.0
+PRT,Portugal,2.0
+QAT,Qatar,3.0
+ROU,Roumanie,2.0
+GBR,Royaume-Uni,2.0
+RUS,Russie,3.0
+RWA,Rwanda,2.0
+SLV,Salvador,2.0
+SEN,Sénégal,2.0
+SRB,Serbie,2.0
+SLE,Sierra Leone,2.0
+SGP,Singapour,1.0
+SVK,Slovaquie,2.0
+SVN,Slovénie,2.0
+SOM,Somalie,4.0
+SDN,Soudan,3.0
+LKA,Sri Lanka,2.0
+SWE,Suède,2.0
+CHE,Suisse,2.0
+SYR,Syrie,2.0
+TJK,Tadjikistan,2.0
+TWN,Taiwan,2.0
+TZA,Tanzanie,2.0
+TCD,Tchad,2.0
+CZE,Tchèque (Rép),3.0
+THA,Thaïlande,2.0
+TTO,Trinité-et-Tobago,2.0
+TUN,Tunisie,2.0
+TKM,Turkménistan,2.0
+TUR,Turquie,2.0
+UKR,Ukraine,2.0
+URY,Uruguay,2.0
+VEN,Venezuela,2.0
+VNM,Vietnam,2.0
+YEM,Yémen,2.0
+ZMB,Zambie,2.0
+ZWE,Zimbabwe,2.0

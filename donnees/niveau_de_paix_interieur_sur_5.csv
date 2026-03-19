@@ -1,0 +1,159 @@
+code,nom,SECU.GPI.OVER
+AFG,Afghanistan,3.25
+ZAF,Afrique du Sud,2.32
+ALB,Albanie,1.93
+DZA,Algérie,2.26
+DEU,Allemagne,1.42
+AGO,Angola,2.1
+SAU,Arabie Saoudite,2.18
+ARG,Argentine,1.76
+ARM,Arménie,2.24
+AUS,Australie,1.49
+AUT,Autriche,1.33
+AZE,Azerbaïdjan,2.36
+BHR,Bahreïn,2.25
+BGD,Bangladesh,2.07
+BLR,Belarus,2.21
+BEL,Belgique,1.38
+BEN,Bénin ,2.23
+BTN,Bhoutan,1.48
+BOL,Bolivie,2.02
+BIH,Bosnie-Herzégovine,1.92
+BWA,Botswana,1.62
+BRA,Brésil,2.02
+BGR,Bulgarie,1.7
+BFA,Burkina Faso,1.88
+BDI,Burundi,2.52
+KHM,Cambodge,2.21
+CMR,Cameroun,2.11
+CAN,Canada,1.32
+CAF,Centrafricaine (rep),2.87
+CHL,Chili,1.62
+CHN,Chine,2.06
+CYP,Chypre,1.96
+COL,Colombie,2.62
+COG,Congo,2.15
+COD,Congo (rep. dem.),3.07
+PRK,Corée du Nord,2.93
+KOR,Corée du Sud,1.73
+CRI,Costa Rica,1.66
+CIV,Côte d'Ivoire,2.42
+HRV,Croatie,1.65
+CUB,Cuba,1.95
+DNK,Danemark,1.24
+DJI,Djibouti,1.88
+DOM,Dominicaine (Rep),2.07
+EGY,Égypte,2.22
+ARE,Émirats arabes unis,1.78
+ECU,Équateur,2.26
+ERI,Érythrée,1.55
+ESP,Espagne,1.72
+EST,Estonie,2.03
+SWZ,Eswatini,2.06
+USA,États-Unis,2.5
+ETH,Éthiopie,1.35
+FIN,Finlande,1.71
+FRA,France,1.97
+GAB,Gabon,1.96
+GMB,Gambie,2.54
+GEO,Géorgie,1.81
+GHA,Ghana,1.98
+GRC,Grèce,2.29
+GTM,Guatemala,2.07
+GIN,Guinée,2.04
+GNQ,Guinée équatoriale,2.11
+GNB,Guinée-Bissau,1.94
+GUY,Guyana,2.18
+HTI,Haïti,2.34
+HND,Honduras,1.48
+HUN,Hongrie,2.55
+IND,Inde,1.91
+IDN,Indonésie,3.19
+IRQ,Irak,2.32
+IRN,Iran,1.33
+IRL,Irlande,1.11
+ISL,Islande,2.84
+ISR,Israël,1.69
+ITA,Italie,2.22
+JAM,Jamaïque,1.33
+JPN,Japon,1.91
+JOR,Jordanie,2.25
+KAZ,Kazakhstan,2.36
+KEN,Kenya,1.79
+KGZ,Kirghizstan,1.66
+KWT,Koweït,1.86
+LAO,Laos,1.77
+LSO,Lesotho,2.46
+LVA,Lettonie,2.13
+LBN,Liban,2.83
+LBR,Liberia,1.74
+LBY,Libye,1.93
+LTU,Lituanie,2.12
+MKD,Macédoine du Nord,1.48
+MDG,Madagascar,1.89
+MYS,Malaisie,2.13
+MWI,Malawi,1.87
+MLI,Mali,1.49
+MAR,Maroc,2.3
+MUS,Maurice,2.44
+MRT,Mauritanie,1.93
+MEX,Mexique,1.88
+MDA,Moldavie,2.01
+MNG,Mongolie,1.8
+MNE,Monténégro,2.8
+MOZ,Mozambique,1.48
+MMR,Myanmar,1.24
+NAM,Namibie,1.89
+NPL,Népal,2.12
+NIC,Nicaragua,2.22
+NER,Niger,2.83
+NGA,Nigeria,1.9
+NOR,Norvège,2.08
+NZL,Nouvelle-Zélande,1.97
+OMN,Oman,1.61
+UGA,Ouganda,2.0
+UZB,Ouzbékistan,2.41
+PAK,Pakistan,1.52
+PAN,Panama,1.47
+PNG,Papouasie-Nouvelle-G.,1.39
+PRY,Paraguay,1.63
+NLD,Pays-Bas,1.61
+PER,Pérou,2.94
+PHL,Philippines,2.25
+POL,Pologne,2.22
+PRT,Portugal,1.99
+QAT,Qatar,1.92
+ROU,Roumanie,1.86
+GBR,Royaume-Uni,1.52
+RUS,Russie,1.59
+RWA,Rwanda,1.33
+SLV,Salvador,3.39
+SEN,Sénégal,3.19
+SRB,Serbie,2.15
+SLE,Sierra Leone,1.42
+SGP,Singapour,1.35
+SVK,Slovaquie,2.83
+SVN,Slovénie,1.6
+SOM,Somalie,1.87
+SDN,Soudan,2.67
+LKA,Sri Lanka,1.4
+SWE,Suède,2.3
+CHE,Suisse,2.08
+SYR,Syrie,1.95
+TJK,Tadjikistan,2.24
+TWN,Taiwan,2.34
+TZA,Tanzanie,1.95
+TCD,Tchad,1.63
+CZE,Tchèque (Rép),2.28
+THA,Thaïlande,1.64
+TTO,Trinité-et-Tobago,2.6
+TUN,Tunisie,1.83
+TKM,Turkménistan,2.54
+TUR,Turquie,1.91
+UKR,Ukraine,2.32
+URY,Uruguay,1.69
+VEN,Venezuela,2.22
+VNM,Vietnam,2.83
+YEM,Yémen,1.9
+ZMB,Zambie,2.08
+ZWE,Zimbabwe,1.97

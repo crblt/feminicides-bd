@@ -1,0 +1,278 @@
+---
+title: "Essai de mise en correlation des facteurs de feminicide "
+subtitle: "Quels sont les facteurs pouvant influencer une potentielle évolution des féminicides dans chaque pays du monde ?"
+author: |
+  RIBAULT Chloé  
+  EL BASRI Samy  
+  BOUHADJAJ Naime  
+  ARTHUR Bousquet
+date: "`r Sys.Date()`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    fig_caption: true
+---
+```{r setup, include=FALSE}
+options(tinytex.tlmgr.path = NULL)
+```
+
+\newpage
+
+# Déclaration de non plagiat
+
+Nous déclarons que ce rapport est le fruit de notre seul travail, à part lorsque cela est explicitement indiqué.
+
+Nous acceptons que la personne évaluant ce rapport puisse :
+- Le reproduire et en fournir une copie à un autre membre de l'université ; et/ou
+- En communiquer une copie à un service en ligne de détection de plagiat.
+
+Nous certifions que nous avons lu et compris les règles ci-dessus.
+
+# Chapitre 1 — Introduction
+
+## Sujet
+
+Notre projet s'inscrit dans l'étude des facteurs pouvant influencer une potentielle évolution des féminicides dans chaque pays du monde.
+
+## Objectifs
+
+- Comprendre les liens entre facteurs socio-économiques et le nombre de féminicides.
+- Identifier les pays ou continents particulièrement concernés.
+- Explorer des pistes d'amélioration ou de prévention.
+
+# Chapitre 2 — Donnéesw
+
+## Sources des données
+
+Utilisation des jeux de données : `pays`, `feminicide` et `continent`, nettoyés et prétraités.
+
+## Description des tables
+
+- **Table `pays`** : données économiques et sociales par pays.
+- **Table `feminicide`** : taux de féminicides pour 100 000 habitants par pays et par an.
+- **Table `continent`** : continent d'appartenance et superficie.
+
+## Prétraitement des données
+
+- Remplacement des valeurs manquantes.
+- Jointures sur `ID_Pays` et `Continent`.
+- Focus sur l'année 2021.
+- Attention : beaucoup de pays n'ont pas de données féminicides → **seulement des estimations possibles**.
+
+# Chapitre 3 — Importation et Pré-traitement des données
+
+```{r echo=FALSE , message=FALSE, warning=FALSE}
+# Charger les bibliothèques nécessaires
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
+
+# Importation des fichiers CSV
+pays <- read.csv("pays_from_sql.csv", sep = ";", header = TRUE)
+feminicide <- read.csv("feminicide_from_sql.csv", sep = ";", header = TRUE)
+continent <- read.csv("continent_from_sql.csv", sep = ",", header = TRUE)
+
+# Afficher les premières lignes pour vérifier
+head(pays)
+head(feminicide)
+head(continent)
+
+
+# Vérifier la structure des données
+str(pays)
+str(feminicide)
+str(continent)
+
+# Conversion des variables numériques si besoin
+pays$PIB_2014 <- as.numeric(pays$PIB_2014)
+pays$PIB_2021 <- as.numeric(pays$PIB_2021)
+pays$Population <- as.numeric(pays$Population)
+pays$Chomage_2014 <- as.numeric(pays$Chomage_2014)
+pays$Chomage_2021 <- as.numeric(pays$Chomage_2021)
+
+feminicide$Nombre_feminicides <- as.numeric(feminicide$Nombre_feminicides)
+feminicide$Year <- as.integer(feminicide$Year)
+
+# Filtrer uniquement l'année 2021 pour feminicide
+feminicide_2021 <- feminicide %>%
+  filter(Year == 2021)
+
+# Première jointure : pays + continent
+pays_continent <- pays %>%
+  inner_join(continent, by = "Continent")
+
+# Ensuite feminicide 2021 + pays_continent
+base_complete <- feminicide_2021 %>%
+  inner_join(pays_continent, by = "ID_Pays")
+
+# Vérification
+head(base_complete)
+
+# Combien de valeurs manquantes dans Nombre_feminicides ?
+sum(is.na(base_complete$Nombre_feminicides))
+
+# Combien de pays sans données sur les féminicides en 2021 ?
+nrow(feminicide_2021) - nrow(base_complete)
+```
+Commentaire :
+De nombreux pays n'ont pas de données sur les féminicides.
+Par conséquent, notre analyse reposera sur les pays ayant des informations disponibles et ne permettra que des estimations globales.
+
+# Chapitre 4 — Analyse exploratoire des données
+
+## Statistiques descriptives générales
+
+```{r}
+# Résumé statistique des principales variables
+summary(base_complete[, c("PIB_2021", "Population", "Chomage_2021", "Nombre_feminicides")])
+```
+Commentaire :
+Nous observons de fortes disparités entre les pays concernant la population, le PIB ainsi que le taux de féminicides.
+
+Répartition des féminicides par continent
+```{r}
+
+# Moyenne des féminicides par continent
+feminicides_continent <- base_complete %>%
+  group_by(Continent) %>%
+  summarise(Moyenne_feminicides = mean(Nombre_feminicides, na.rm = TRUE)) %>%
+  arrange(desc(Moyenne_feminicides))
+
+# Affichage du tableau
+feminicides_continent
+
+# Graphique
+ggplot(feminicides_continent, aes(x = reorder(Continent, -Moyenne_feminicides), y = Moyenne_feminicides)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Moyenne des féminicides pour 100 000 habitants par continent en 2021",
+       x = "Continent",
+       y = "Nombre de féminicides pour 100 000 habitants") +
+  theme_minimal()
+```
+Commentaire :
+On remarque que certains continents présentent des taux moyens de féminicides bien plus élevés que d'autres.
+
+Distribution des taux de féminicides par pays
+```{r}
+
+# Histogramme des féminicides
+ggplot(base_complete, aes(x = Nombre_feminicides)) +
+  geom_histogram(binwidth = 0.5, fill = "lightcoral", color = "black") +
+  labs(title = "Distribution des taux de féminicides par pays en 2021",
+       x = "Nombre de féminicides pour 100 000 habitants",
+       y = "Nombre de pays") +
+  theme_minimal()
+```
+Commentaire :
+La majorité des pays présentent un faible taux de féminicides, mais quelques pays affichent des taux très élevés.
+
+Relation PIB et féminicides
+```{r}
+
+# Graphique PIB vs Nombre de féminicides
+ggplot(base_complete, aes(x = PIB_2021, y = Nombre_feminicides)) +
+  geom_point(color = "darkgreen") +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +
+  labs(title = "Relation entre PIB 2021 et taux de féminicides",
+       x = "PIB 2021 (USD)",
+       y = "Nombre de féminicides pour 100 000 habitants") +
+  theme_minimal()
+```
+Commentaire :
+Il n'existe pas de lien clair et direct entre le PIB d'un pays et son taux de féminicides, mais des tendances peuvent être observées.
+
+```{r}
+# Graphique Terreur politique vs Nombre de féminicides
+ggplot(base_complete, aes(x = Terreur_politique, y = Nombre_feminicides)) +
+  geom_point(color = "firebrick") +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  labs(title = "Relation entre terreur politique et taux de féminicides",
+       x = "Indice de terreur politique",
+       y = "Nombre de féminicides pour 100 000 habitants") +
+  theme_minimal()
+```
+Commentaire :
+Une tendance semble montrer que dans les pays où la terreur politique est élevée, les taux de féminicides ont tendance à être plus importants.
+Toutefois, la corrélation n'est pas systématique et mérite d'être approfondie.
+
+Relation entre accès aux armes et féminicides
+```{r}
+# Graphique Facilité d'accès aux armes vs Nombre de féminicides
+ggplot(base_complete, aes(x = Facilite_acces_aux_armes, y = Nombre_feminicides)) +
+  geom_point(color = "darkblue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Relation entre facilité d'accès aux armes et taux de féminicides",
+       x = "Score d'accès aux armes",
+       y = "Nombre de féminicides pour 100 000 habitants") +
+  theme_minimal()
+```
+Commentaire :
+Les pays avec une plus grande facilité d'accès aux armes pourraient présenter des taux de féminicides plus élevés, mais cette relation semble être influencée par d'autres facteurs contextuels.
+
+ Chapitre 5 — Analyse statistique avancée
+
+## Corrélations entre variables explicatives et taux de féminicides
+
+```{r}
+# Calcul des corrélations simples
+cor_PIB <- cor(base_complete$PIB_2021, base_complete$Nombre_feminicides, use = "complete.obs")
+cor_Population <- cor(base_complete$Population, base_complete$Nombre_feminicides, use = "complete.obs")
+cor_Terreur <- cor(base_complete$Terreur_politique, base_complete$Nombre_feminicides, use = "complete.obs")
+cor_Armes <- cor(base_complete$Facilite_acces_aux_armes, base_complete$Nombre_feminicides, use = "complete.obs")
+
+# Affichage des résultats
+cor_PIB
+cor_Population
+cor_Terreur
+cor_Armes
+```
+Commentaire :
+Ces corrélations donnent une première indication de la force et du sens du lien entre différentes variables et les féminicides.
+Une corrélation proche de +1 ou -1 indique une relation forte, tandis qu'une corrélation proche de 0 indique peu ou pas de relation.
+
+Test de corrélation significatif (Pearson)
+
+
+```{r}
+library(countrycode)
+library(viridis)
+
+
+# Charger les données
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+# Traduire les noms de pays français vers anglais
+feminicide_2021$Pays_anglais <- countrycode(feminicide_2021$ID_Pays, 
+                                            origin = "country.name.fr", 
+                                            destination = "country.name.en")
+feminicide_2021$Pays_anglais <- ifelse(feminicide_2021$ID_Pays == "États-Unis", "United States of America", feminicide_2021$Pays_anglais)
+
+
+# Fusionner
+world_fem <- world %>%
+  left_join(feminicide_2021, by = c("admin" = "Pays_anglais"))
+
+
+# Carte
+ggplot(world_fem) +
+  geom_sf(aes(fill = Nombre_feminicides)) +
+ scale_fill_viridis_c(
+  option = "plasma",
+  na.value = "white",
+  name = "Féminicides\n(100k habitants)"
+)+
+  theme_minimal() +
+  labs(
+    title = "Carte mondiale des féminicides (2021)",
+    subtitle = "Plus rouge = plus de féminicides, Blanc = données manquantes"
+  )
+
+```
+
+
+

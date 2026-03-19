@@ -1,0 +1,387 @@
+---
+title: "Rapport de groupe en Sciences des Données 2 + Bases de données"
+author: 
+  - "Ayoub AKKOUH (22210148), Ishaq CHALAH (22207333), Hanan HANNANI (22212624), Wassim HARRAGA (22203314)"
+date: "30/04/2024"
+output:
+  pdf_document:
+    fig_caption: yes         
+    keep_md: yes             
+    keep_tex: yes           
+    number_sections: yes    
+    toc: yes                
+    toc_depth: 1              
+    latex_engine: pdflatex      
+    extra_dependencies:
+      - geometry: margin=1in 
+      - titlesec: 
+          format: '\\titleformat{\\chapter}[block]{\\normalfont\\huge\\bfseries}{\\thechapter}{1em}{}'
+  word_document:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '2'            
+session: 2024                  
+team: 10                       
+always_allow_html: true
+---
+
+```{r setup, include=FALSE}
+```
+# Chapitre 1 — Introduction
+
+## 1.1 Problematique 
+
+1.1 Problématique
+Les féminicides représentent aujourd'hui l'une des formes les plus extrêmes de violences faites aux femmes, et demeurent un enjeu dramatique dans toutes les régions du monde.
+Malgré la mise en place de politiques publiques et d'actions de sensibilisation, de nombreux pays continuent d'enregistrer des taux préoccupants de meurtres fondés sur le genre.
+
+Cette problématique complexe est influencée par de nombreux facteurs sociaux, économiques et politiques.
+Parmi ceux-ci, les conditions de vie (chômage, accès aux armes, instabilité politique), ainsi que les disparités économiques (PIB par habitant, pauvreté), pourraient jouer un rôle déterminant dans la prévalence des féminicides.
+
+Face à ce constat, notre interrogation principale est la suivante :
+
+Quels sont les facteurs pouvant influencer une potentielle évolution des féminicides dans chaque pays du monde ?
+
+Cette question est cruciale, à la fois du point de vue social et politique.
+En effet, comprendre les facteurs qui aggravent ce phénomène permettrait de mieux cibler les politiques de prévention, d’améliorer la protection des populations à risque, et, plus largement, de réduire les inégalités de genre.
+Cela pourrait également avoir un impact positif sur la stabilité sociale et économique des pays concernés.
+
+## 1.2 Responsabilités et composition de l'équipe
+
+- RIBAULT Chloé  
+- EL BASRI Samy  
+- BOUHADJAJ Naim  
+- ARTHUR Bousquet  
+
+| Nom               | Statut     | Missions principales |
+|:------------------|:-----------|:----------------------|
+| **RIBAULT Chloé**  | Étudiante  | - Responsable de l'importation des données<br>- Co-responsable du MCD<br>- Co-responsable du rapport<br>- Co-responsable des requêtes SQL |
+| **EL BASRI Samy**  | Étudiant   | - Responsable du tri et nettoyage des données<br>- Co-responsable du rapport<br>- Co-responsable de l'analyse exploratoire |
+| **BOUHADJAJ Naim** | Étudiant   | - Responsable de l'analyse des données statistiques<br>- Co-responsable des requêtes SQL<br>- Responsable de l'intégration des graphiques |
+| **ARTHUR Bousquet**| Étudiant   | - Responsable du fichier `rapport.Rmd`<br>- Co-responsable du MCD<br>- Responsable de la modélisation statistique et prédictive |
+
+# Chapitre 2 — Base de données
+
+## 2.1 Provenance des données
+
+Afin d’étudier les facteurs potentiellement liés aux féminicides dans le monde, nous avons utilisé plusieurs sources de données fiables et reconnues :
+
+- **Taux de féminicides** :  
+  -> Données extraites de l'**Office des Nations Unies contre la drogue et le crime (UNODC)**  
+  [Lien](https://dataunodc.un.org/dp-femicide)
+
+- **Produit Intérieur Brut (PIB)** :  
+  -> Données provenant de la **Banque mondiale**, indicateur NY.GDP.MKTP.CD  
+  [Lien](https://donnees.banquemondiale.org/indicateur/NY.GDP.MKTP.CD)
+
+- **Droit à l'avortement** :  
+  -> Informations issues de l'organisation **Focus2030**  
+  [Lien](https://focus2030.org/Ou-en-est-le-droit-a-l-avortement-dans-le-monde-en-2024)
+
+- **Taux de chômage** :  
+  -> Données disponibles sur **Kaggle** : *Unemployment Dataset*  
+  [Lien](https://www.kaggle.com/datasets/pantanjali/unemployment-dataset)
+
+- **Consommation d'alcool** :  
+  -> Données disponibles sur **Kaggle** : *Alcohol Consumption Dataset*  
+  [Lien](https://www.kaggle.com/datasets/mysarahmadbhat/alcohol-consumption)
+
+- **Indices de paix intérieure, facilité d'accès aux armes, terreur politique, homicides et droits humains** :  
+  -> Données issues de **Perspective Monde** de l'Université de Sherbrooke :  
+    - [Indice de paix intérieure (GPI)](https://perspective.usherbrooke.ca/bilan/servlet/BMTendanceStatPays/?codeStat=SECU.GPI.INTR&codePays=RUS&codeTheme=17)
+    - [Facilité d'accès aux armes](http://perspective.usherbrooke.ca/bilan/servlet/BMTendanceStatPays/?codeTheme=17&codeStat=SECU.GPI.WMID&codePays=RUS)
+    - [Terreur politique](https://perspective.usherbrooke.ca/bilan/servlet/BMTendanceStatPays/?codeTheme=17&codeStat=SECU.GPI.POLI&codePays=RUS)
+    - [Taux d'homicides](https://perspective.usherbrooke.ca/bilan/servlet/BMTendanceStatPays/?codeTheme=17&codeStat=SECU.GPI.HOMI&codePays=RUS)
+    - [Respect des droits humains](https://perspective.usherbrooke.ca/bilan/servlet/BMTendanceStatPays/?codeTheme=17&codeStat=SECU.GPI.REHR&codePays=RUS)
+    - [Stabilité institutionnelle](https://perspective.usherbrooke.ca/bilan/servlet/BMTendanceStatPays/?codeTheme=17&codeStat=SECU.GPI.INST&codePays=RUS)
+
+---
+
+Ces bases de données proviennent d’organismes fiables, garantissant la robustesse et la pertinence de nos analyses ultérieures.  
+Elles couvrent un spectre varié de facteurs socio-économiques susceptibles d’influencer les taux de féminicides au niveau mondial.
+
+
+
+## 2.2 Descriptif des tables
+
+Notre projet repose sur l'utilisation de trois tables principales, construites à partir des données collectées :
+
+- **Table `pays`**  
+  Contient des informations socio-économiques par pays.  
+  Les principales variables sont :
+  - `ID_Pays` : Nom du pays
+  - `Continent` : Continent auquel appartient le pays
+  - `PIB_2014` : Produit Intérieur Brut du pays en 2014 (en dollars)
+  - `PIB_2021` : Produit Intérieur Brut du pays en 2021 (en dollars)
+  - `Alcool_par_habitant` : Consommation moyenne d'alcool par habitant
+  - `Droit_avortement` : Statut du droit à l’avortement
+  - `Chomage_2014` : Taux de chômage en 2014
+  - `Chomage_2021` : Taux de chômage en 2021
+  - `Policier_pour_100k` : Nombre de policiers pour 100 000 habitants
+  - `Facilite_acces_aux_armes` : Indice d’accès aux armes
+  - `Paix_interieur` : Indice de paix intérieure
+  - `Terreur_politique` : Indice de terreur politique
+  - `Population` : Population totale du pays
+  - `Meurtre_100k_sur_5` : Nombre moyen de meurtres pour 100 000 habitants sur 5 ans
+
+- **Table `feminicide`**  
+  Recense les taux de féminicides par pays et par année.  
+  Les principales variables sont :
+  - `ID_Feminicide` : Identifiant unique de l'observation
+  - `ID_Pays` : Nom du pays
+  - `Region` : Région du pays
+  - `Subregion` : Sous-région du pays
+  - `Year` : Année d'observation
+  - `Nombre_feminicides` : Nombre de féminicides pour 100 000 habitants
+
+- **Table `continent`**  
+  Fournit des informations générales par continent.  
+  Les principales variables sont :
+  - `Continent` : Nom du continent
+  - `Nombre_de_pays` : Nombre de pays dans le continent
+  - `Plus_grand_pays` : Nom du plus grand pays en superficie
+  - `Superficie_totale_km2` : Superficie totale du continent (en km²)
+  - `Population_estimee_2023` : Population estimée en 2023
+  - `Densite_moyenne_hab_km2` : Densité moyenne d'habitants par km²
+  - `Pays_le_plus_peuple` : Nom du pays le plus peuplé du continent
+  - `Nombre_de_langues_officielles` : Nombre de langues officielles recensées
+  - `IDH_moyen` : Indice de Développement Humain moyen
+  - `PIB_total_milliards_USD` : PIB total du continent (en milliards de dollars)
+  - `Taux_urbanisation_%` : Taux moyen d'urbanisation
+  - `Esperance_de_vie_moyenne` : Espérance de vie moyenne
+  - `Taux_alphabétisation_%` : Taux d'alphabétisation moyen
+
+
+## 2.3 Modèle MCD
+
+*(À insérer : un schéma MCD de la base de données)*
+
+## 2.4 Modèle MOD
+![MOD]("D:\Projet_donnes_final\Projet_donnes\MOD.png")
+
+
+
+## 2.5 Import des données
+
+Les données utilisées pour ce projet ont été importées à partir de fichiers CSV, avec un traitement spécifique pour enrichir les tables avant l'importation dans R et SQL. 
+Voici les étapes détaillées de l'importation et de la préparation des données :
+
+Les données provenant de diverses sources ont été stockées dans des fichiers CSV. Les données incluent des informations socio-économiques par pays, des taux de féminicides, et des données générales par continent.
+
+Les fichiers ont été importés à l'aide de la fonction read.csv() dans R et ont été chargés dans la base de données SQL  via un outi PhpMyAdmin.
+```{r, echo=FALSE}
+pays <- read.csv("pays_from_sql.csv", sep = ";", header = TRUE)
+feminicide <- read.csv("feminicide_from_sql.csv", sep = ";", header = TRUE)
+continent <- read.csv("continent_from_sql.csv", sep = ",", header = TRUE)
+```
+
+#**Ajout de données manuellement dans les fichiers CSV **
+
+
+Afin de rendre les données plus complètes et de mieux correspondre aux exigences du projet, des informations ont été ajoutées directement dans les fichiers CSV avant leur importation dans R et SQL. Par exemple, des données supplémentaires comme la surface des contient le plus grand pays de chaque contient etc.
+
+#**Fusion des tables sur les fichiers CSV** : 
+
+
+Avant d'importer les données dans R et SQL, plusieurs tables ont été fusionnées directement dans les fichiers CSV. Par exemple,la tables pays avec les tables consommation_alcool, chomage, accées aux armes etc. Tout cela dans le but de créer une table pays bien complete 
+
+#**Importation des fichiers CSV** : 
+
+
+
+ Après la modification et la fusion des fichiers CSV, les fichiers ont été . En SQL, cela a été réalisé avec des commandes d'insertion , tandis qu'en R, les fichiers ont été lus et stockés dans des data frames pour être utilisés dans les analyses suivantes.
+
+
+
+## 2.6 Requêtes réalisées
+
+
+
+
+# Chapitre 3 — Matériel et Méthodes
+
+## 3.1 Logiciels
+
+Pour réaliser ce projet, nous avons utilisé plusieurs logiciels et outils qui nous ont permis de gérer, analyser, et visualiser les données efficacement. Voici un aperçu des principaux logiciels utilisés :
+
+**RStudio :**
+
+RStudio est un environnement de développement intégré (IDE) pour le langage de programmation R. Il est utilisé pour le traitement des données, l'analyse statistique, et la création de visualisations graphiques. Nous avons utilisé RStudio pour manipuler les données collectées, effectuer des analyses exploratoires, appliquer des modèles statistiques, et générer des rapports dynamiques avec RMarkdown. RStudio facilite l'exécution de scripts R et la gestion des paquets nécessaires à notre analyse.
+
+**PHPMyAdmin **
+:
+PHPMyAdmin est un outil open-source écrit en PHP destiné à gérer les bases de données MySQL via une interface web. Nous avons utilisé PHPMyAdmin pour créer et gérer les bases de données, effectuer des requêtes SQL, et organiser les données sous forme de tables. Cet outil nous a permis de concevoir, manipuler, et interroger efficacement la base de données stockée localement sur notre serveur via MAMP, et d'importer des jeux de données au format CSV dans ces tables.
+
+**Microsoft Excel :**
+Microsoft Excel est un tableur puissant largement utilisé pour le traitement de données. Nous avons utilisé Excel principalement pour le nettoyage de données initiales, l'analyse exploratoire rapide, et la création de graphiques simples. Bien qu'Excel ne soit pas adapté aux grandes bases de données complexes, il a été très utile pour effectuer des manipulations manuelles rapides et des calculs de base avant de transférer les données dans R pour des analyses plus complexes.
+
+
+
+## 3.2 Description des Données
+# Description des variables sous forme de tableaux
+
+
+**Table Pays**
+
+```{r, echo=FALSE}
+library(knitr)
+
+# Création du tableau pour la table socio-économique
+socio_economique <- data.frame(
+  Variable = c("id_P", "PIB_2014", "PIB_2021", "Nb_litre_alcool", "droit_avortement", 
+               "taux_chomage2014", "taux_chomage2021", "niv_police", "niv_acces_armes", 
+               "paix_interieure", "niveau_terreur_politique", "population", "meutre_100k_sur_5"),
+  Type_statistique = c("qualitative nominale", "quantitative continue", "quantitative continue", 
+                       "quantitative continue", "qualitative nominale", "quantitative continue", 
+                       "quantitative continue", "quantitative continue", "quantitative continue", 
+                       "quantitative continue", "quantitative continue", "quantitative discrète", 
+                       "quantitative continue")
+)
+
+kable(socio_economique, col.names = c("Nom de la variable", "Type statistique"))
+
+```
+**Table Continent **
+```{r, echo=FALSE}
+# Création du tableau pour la table du Continent
+continent <- data.frame(
+  Variable = c("Continent", "Nombre_de_pays", "Plus_grand_pays", "Superficie_totale_km2", 
+               "Population_estimee_2023", "Densite_moyenne_hab_km2", "Pays_le_plus_peuple", 
+               "Nombre_de_langues_officielles", "IDH_moyen", "PIB_total_milliards_USD", 
+               "Taux_urbanisation_%", "Esperance_de_vie_moyenne", "Taux_alphabétisation_%"),
+  Type_statistique = c("qualitative nominale", "quantitative discrète", "qualitative nominale", 
+                       "quantitative continue", "quantitative discrète", "quantitative continue", 
+                       "qualitative nominale", "quantitative discrète", "quantitative continue", 
+                       "quantitative continue", "quantitative continue", "quantitative continue", 
+                       "quantitative continue")
+)
+
+kable(continent, col.names = c("Nom de la variable", "Type statistique"))
+```
+**Table Feminicide**
+```{r, echo=FALSE}
+# Création du tableau pour la table des féminicides
+feminicide <- data.frame(
+  Variable = c("ID_Feminicide", "Region", "Subregion", "ID_Pays", "Year", "Premier Value.fmt"),
+  Type_statistique = c("qualitative nominale", "qualitative nominale", "qualitative nominale", 
+                       "qualitative nominale", "quantitative discrète", "quantitative continue")
+)
+
+kable(feminicide, col.names = c("Nom de la variable", "Type statistique"))
+```
+
+## 3.3 Nettoyage des données
+Le nettoyage des données a été une étape cruciale dans notre projet afin de garantir la qualité et la cohérence des informations utilisées dans nos analyses. Plusieurs techniques ont été employées pour traiter les données et les préparer pour les analyses statistiques et les requêtes SQL. Voici les principaux aspects du nettoyage des données :
+
+
+
+#Harmonisation des noms de pays :
+
+L'une des difficultés majeures que nous avons rencontrées était l'harmonisation des noms de pays entre les différentes bases de données. En effet, certains pays étaient notés de manière différente dans les bases de données, notamment en raison des traductions, des abréviations, ou des erreurs de saisie. Par exemple, le nom du pays "États-Unis" apparaissait sous différentes formes : "USA", "United States", "E.U." etc.
+. Nous devions également prendre en compte les variations linguistiques, notamment en ce qui concerne les noms de pays en anglais, français et d'autres langues. Pour résoudre ce problème,nous avons donc pris le temps de bien tout mettre en français avec la même orthographe pour eviter les problemes de compatibilité
+
+#Vérification des types de données :
+
+Une autre étape importante du nettoyage a consisté à vérifier que chaque colonne de données était du bon type (numérique, texte, date, etc.). Par exemple, des variables numériques, comme le PIB et les taux de chômage, étaient parfois enregistrées sous forme de texte, ce qui rendait les calculs et les analyses impossibles. Nous avons converti ces colonnes au type approprié pour permettre une manipulation correcte des données.
+
+
+Le nettoyage des données a donc été un travail de longue haleine, impliquant une analyse minutieuse et plusieurs étapes de correction. Ces efforts ont permis de garantir que les données étaient prêtes à être utilisées pour des analyses statistiques fiables et cohérentes
+
+# \underline{3.4 Étapes de Pré-traitements}
+
+
+Lors du pré-traitement des données, plusieurs étapes essentielles ont été suivies pour assurer la qualité et la pertinence des données utilisées dans notre analyse. 
+\setlength{\parskip}{2em}
+**Sélection de l'année 2021**
+La première étape du pré-traitement a consisté à filtrer les données pour ne conserver que celles relatives à l'année 2021. Étant donné que notre analyse se concentre sur les féminicides de cette année, seules les observations pour l’année 2021 ont été retenues.
+
+**Création de nouvelles variables**
+Afin d’enrichir notre analyse, des variables supplémentaires ont été créées. Par exemple, la variable Taux_Feminicide_Par_100k a été dérivée en divisant le nombre de féminicides par le nombre total d’habitants pour chaque pays, ce qui nous a permis de standardiser le taux de féminicide en fonction de la population. 
+
+**Normalisation des données de pays**
+En raison des différences de format dans les données des pays, une étape de nettoyage des noms de pays a été nécessaire. Cela a inclus la suppression des espaces superflus et la conversion des noms de pays dans un format uniforme (par exemple, en minuscules ou avec une casse appropriée).
+
+
+**Vérification de l'intégrité des données**
+À chaque étape, des vérificatRions ont été effectuées pour s'assurer de la cohérence et de l'intégrité des données. Cela a inclus la vérification des doublons, des erreurs de saisie, et des incohérences entre les différentes sources de données.
+
+\setlength{\parskip}{4em}
+
+## 3.5 Modélisation statistique
+
+*(Présenter les méthodes utilisées : régressions, tests statistiques, etc.)*
+
+
+# Chapitre 4 — Analyse Exploratoire des Données
+
+*(Insérer graphiques exploratoires ici : histogrammes, boxplots, carte du monde, etc.)*
+
+# Chapitre 5 — Analyse et Résultats
+
+## 5.1 Un premier modèle
+
+*(Insérer le premier modèle créé, ex: régression linéaire simple.)*
+```{r echo=FALSE , message=FALSE, warning=FALSE}
+# Charger les bibliothèques nécessaires
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
+
+# Importation des fichiers CSV
+pays <- read.csv("pays_from_sql.csv", sep = ";", header = TRUE)
+feminicide <- read.csv("feminicide_from_sql.csv", sep = ";", header = TRUE)
+continent <- read.csv("continent_from_sql.csv", sep = ",", header = TRUE)
+
+# Nettoyage des noms de colonnes (si nécessaire)
+# Ici on suppose que la colonne clé est bien nommée 'ID_Pays' partout
+
+# Uniformisation des noms de pays pour éviter les échecs de jointure
+feminicide$ID_Pays <- trimws(tolower(feminicide$ID_Pays))
+pays$ID_Pays <- trimws(tolower(pays$ID_Pays))
+continent$Continent <- trimws(tolower(continent$Continent))
+pays$Continent <- trimws(tolower(pays$Continent))
+
+# Première jointure : pays + continent
+pays_continent <- pays %>%
+  inner_join(continent, by = "Continent")
+
+# Deuxième jointure : feminicide + pays_continent
+base_complete <- feminicide %>%
+  inner_join(pays_continent, by = "ID_Pays")
+
+# Affichage rapide pour vérification
+print(head(base_complete))
+print(str(base_complete))
+
+# Nombre de valeurs manquantes dans Nombre_feminicides
+print(sum(is.na(base_complete$Nombre_feminicides)))
+
+# Nombre de pays sans données sur les féminicides
+print(nrow(feminicide) - nrow(base_complete))
+
+```
+
+## 5.2 Autres analyses
+
+*(Insérer d'autres tests statistiques, modèles avancés si réalisés.)*
+
+# Chapitre 6 — Discussion
+
+*(Analyser les résultats : facteurs influençant les féminicides, critiques des limites, fiabilité des données.)*
+
+# Chapitre 7 — Conclusion et perspectives
+
+*(Résumer les résultats et proposer des perspectives futures d'amélioration ou de recherches complémentaires.)*
+
+# Bibliographie
+
+- Packages R utilisés : dplyr, ggplot2, sf, rnaturalearth, countrycode
+- Sources de données : (à compléter)
