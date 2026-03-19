@@ -1,12 +1,12 @@
-# 📊 Analyse des Féminicides — Bases de Données & Sciences des Données 2
+Analyse des Féminicides — Bases de Données & Sciences des Données 2
 
-Projet de groupe réalisé par une équipe de 4 en **L2 MIASHS — Semestre 4**, dans le cadre des UE **Bases de Données** et **Sciences des Données 2**.
+Projet de groupe réalisé par une équipe de 4 en L2 MIASHS — Semestre 4, dans le cadre des UE Bases de Données et Sciences des Données 2.
 
-## Présentation
+Présentation : 
 
 Ce projet analyse les féminicides à l'échelle mondiale en construisant une base de données relationnelle enrichie de plusieurs indicateurs socio-politiques, puis en réalisant des analyses statistiques et des visualisations en R.
 
-## Contenu du repo
+Contenu du repo
 
 ```
 feminicides-bd/
@@ -37,12 +37,12 @@ feminicides-bd/
 └── Requetes_SQL_Explication_Feminicides.pdf → Requêtes SQL commentées
 ```
 
-## Stack technique
+Stack technique
 
-- **SQL** : MySQL — modélisation relationnelle, requêtes d'analyse
-- **R** : ggplot2, dplyr, tidyr — visualisations et analyses statistiques
+- SQL : MySQL — modélisation relationnelle, requêtes d'analyse
+- R : ggplot2, dplyr, tidyr — visualisations et analyses statistiques
 
-## Reproduire l'analyse
+Reproduire l'analyse
 
 ```sql
 -- 1. Créer la base
@@ -56,6 +56,5 @@ source sql/insert_feminicide_cleaned.sql
 # 2. Ouvrir rapport/rapport_structure_projet.Rmd dans RStudio et knit
 ```
 
-## Auteurs
 
 Projet de groupe — L2 MIASHS, Semestre 4, 2023–2024
